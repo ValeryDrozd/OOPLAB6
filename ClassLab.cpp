@@ -3,12 +3,12 @@ using namespace std;
 
 class figure {
 public:
-	virtual double surfaceArea();
-	virtual double volume();
+	virtual double surfaceArea() { return 0; }
+	virtual double volume() { return 0; }
 };
 
 class parallelepiped :public figure {
-	int a, b, c;
+	long long a, b, c;
 public:
 	parallelepiped() {
 
