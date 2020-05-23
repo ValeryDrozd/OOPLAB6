@@ -7,6 +7,7 @@ protected:
 public:
 	virtual double surfaceArea() { return 0; }
 	virtual double volume() { return 0; }
+	virtual void getSides(){}
 };
 
 class parallelepiped :public figure {
@@ -20,20 +21,21 @@ public:
 		this->a[1] = b;
 		this->a[2] = c;
 	}
+	parallelepiped(istream& in) {
+		cout << "Enter sides of paralelepiped\n";
+		in >> this->a[0] >> this->a[1] >> this->a[2];
+	}
 	double surfaceArea() override {
 		return 2 * (a[0] * a[2] + a[1] * a[0] + a[1] * a[2]);
 	}
 	double volume() override{
 		return a[0] * a[1] * a[2];
 	}
-	int getHeight() {
-		return this->a[0];
-	}
-	int getWight() {
-		return this->a[1];
-	}
-	int getLenght() {
-		return this->a[2];
+	void getSides() override{
+		cout << "Sides of paralelepiped" << endl;
+		cout << "Height: " << this->a[0] << endl;
+		cout << "Wight: " << this->a[1] << endl;
+		cout << "Lenght: " << this->a[2] << endl;
 	}
 };
 
@@ -45,14 +47,19 @@ public:
 	cube(int a) {
 		this->a[0] = a;
 	}
+	cube(istream& in){
+		cout << "Enter side of cube\n";
+		in >> this->a[0];
+	}
 	double surfaceArea() override {
-		return 6 * a[0] * a[0];
+		double v = 6 * a[0] * a[0];
+		return v;
 	}
 	double volume() override {
 		return pow(a[0], 3);
 	}
-	int side() {
-		return a[0];
+	void getSides() override {
+		cout << "Side of cube " <<a[0]<< endl;
 	}
 };
 
@@ -64,38 +71,40 @@ public:
 	tetraedr(int a) {
 		this->a[0] = a;
 	}
-	double surfaceArea() {
+
+	tetraedr(istream& in) {
+		cout << "Enter side of tetraedr\n";
+		in >> a[0];
+	}
+	double surfaceArea() override{
 		return 1.0 * a[0] * a[0] * sqrt(3);
 	}
-	double volume() {
+	double volume() override {
 		return 1.0 * pow(a[0],3) * sqrt(2) / 12;
 	}
-	int side() {
-		return a[0];
+	void getSides() override {
+		cout << "Side of tetraedr " << a[0] << endl;
 	}
 };
 
 int main() {
 	int cmd;
 	bool run = true;
-	int a;
-	cout << "Enter side of cube\n";
-	cin >> a;
-	cube cu(a);
-	cout << "Side of the cube: " << cu.side() << endl;
-	cout << "Volume of the cube: " << cu.volume() << endl;
-	cout << "Area of surfaces: " << cu.surfaceArea() << endl;
-	int b, c;
-	cout << "Enter sides of paralelepiped\n";
-	cin >> a >> b >> c;
-	parallelepiped p(a,b,c);
-	cout << "Sides of parallelepiped: " << p.getHeight() << ',' << p.getLenght() << ',' << p.getWight() << endl;
-	cout << "Volume of the parallelepiped: " << p.volume() << endl;
-	cout << "Area of surfaces: " << p.surfaceArea() << endl;
-	cout << "Enter side of tetraedr\n";
-	cin >> a;
-	tetraedr t(a);
-	cout << "Side of the tetraedr: " << t.side() << endl;
-	cout << "Volume of the tetraedr: " << t.volume() << endl;
-	cout << "Area of surfaces: " << t.surfaceArea() << endl;
+	figure* f;
+
+
+	f = new cube(cin);
+	f->getSides();
+	cout << "Volume of the cube: " << f->volume() << endl;
+	cout << "Area of surfaces: " << f->surfaceArea() << endl;
+
+	f = new  parallelepiped(cin);
+	f->getSides();
+	cout << "Volume of the parallelepiped: " << f->volume() << endl;
+	cout << "Area of surfaces: " << f->surfaceArea() << endl;
+	
+	f = new tetraedr(cin);
+	f->getSides();
+	cout << "Volume of the tetraedr: " << f->volume() << endl;
+	cout << "Area of surfaces: " << f->surfaceArea() << endl;
 }
